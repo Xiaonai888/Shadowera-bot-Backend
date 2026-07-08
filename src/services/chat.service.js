@@ -64,7 +64,7 @@ function mapOpenAIError(error) {
   );
 }
 
-export async function createChatReply(message) {
+export async function createChatReply(message, history = []) {
   try {
     const response = await getOpenAIClient().responses.create({
       model: process.env.OPENAI_MODEL?.trim() || DEFAULT_MODEL,
@@ -72,7 +72,13 @@ export async function createChatReply(message) {
         effort: "low"
       },
       instructions: SHADOWER_INSTRUCTIONS,
-      input: message,
+      input: [
+        ...history,
+        {
+          role: "user",
+          content: message
+        }
+      ],
       max_output_tokens: 1200,
       store: false
     });
