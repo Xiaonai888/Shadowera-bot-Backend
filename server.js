@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 
 import { corsOptions } from "./src/config/cors.js";
 import chatRoutes from "./src/routes/chat.routes.js";
+import chatSessionsRoutes from "./src/routes/chatSessions.routes.js";
 import healthRoutes from "./src/routes/health.routes.js";
 import { notFound } from "./src/middleware/notFound.middleware.js";
 import { errorHandler } from "./src/middleware/error.middleware.js";
@@ -26,6 +27,7 @@ app.get("/", (req, res) => {
 
 app.use("/health", healthRoutes);
 app.use("/api/chat", chatRoutes);
+app.use("/api/chats", chatSessionsRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
