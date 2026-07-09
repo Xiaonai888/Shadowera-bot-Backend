@@ -1,6 +1,5 @@
 import { getMyAiInstructions } from "../config/myAiRules.js";
 
-const DEFAULT_BASE_URL = "http://127.0.0.1:11434";
 const MODEL_CACHE_MS = 15000;
 
 let modelCache = {
@@ -16,8 +15,19 @@ function createPublicError(statusCode, publicMessage) {
   return error;
 }
 
+export function isOllamaConfigured() {
+  return Boolean(process.env.OLLAMA_BASE_URL?.trim());
+}
+
 function getBaseUrl() {
-  const rawUrl = process.env.OLLAMA_BASE_URL?.trim() || DEFAULT_BASE_URL;
+  const rawUrl = process.env.OLLAMA_BASE_URL?.trim();
+
+  if (!rawUrl) {
+    throw createPublicError(
+      503,
+      "My AI model server is not configured. Add OLLAMA_BASE_URL in Render."
+    );
+  }
 
   try {
     const url = new URL(rawUrl);
