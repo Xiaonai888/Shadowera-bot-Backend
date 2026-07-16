@@ -91,8 +91,15 @@ const INTENT_INSTRUCTIONS = {
     "Continue from the latest established scene without restarting or contradicting prior events. Preserve pacing and unresolved threads.",
   rewrite:
     "Rewrite only the requested material while preserving meaning, names, facts, point of view, and constraints unless the user asks to change them.",
-  summarize:
-    "Summarize accurately. Separate confirmed facts from interpretation and do not invent missing events.",
+  summarize: [
+    "Create a selective summary, not a rewrite or scene-by-scene retelling.",
+    "Keep only the central events, decisions, facts, causes, outcomes, and unresolved points.",
+    "Aim for roughly 15 to 25 percent of the source length unless the user requests another size.",
+    "Do not copy full paragraphs from the source.",
+    "Remove repetition, decorative wording, most dialogue, examples, and minor details unless they are essential.",
+    "Use concise sections or bullets when they improve clarity.",
+    "Separate confirmed facts from interpretation and never invent missing events."
+  ].join(" "),
   translate:
     "Translate faithfully into the requested language while preserving names, tone, formatting, and story meaning.",
   create_character:
